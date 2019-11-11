@@ -2,11 +2,11 @@ package sample;
 
 public class Cell {
     private boolean alive;
-    private int type;
+    private int grainType;
 
-    public Cell(boolean alive, int type) {
+    public Cell(boolean alive, int grainType) {
         this.alive = alive;
-        this.type = type;
+        this.grainType = grainType;
     }
 
     public boolean isAlive() {
@@ -17,11 +17,11 @@ public class Cell {
         this.alive = alive;
     }
 
-    public int getType() {
-        return type;
+    public int getGrainType() {
+        return grainType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setGrainType(int grainType) {
+        this.grainType = grainType;
     }
 }
