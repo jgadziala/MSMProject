@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.paint.Color;
+
 import java.util.Random;
 
 public class Board {
@@ -10,12 +12,20 @@ public class Board {
     private String neighbourhoodSelectionType;
     private int grainSeeds;
 
-    public Board(int width, int height, String neighbourhoodSelectionType, int grainSeeds) {
+//    public Board(int width, int height, String neighbourhoodSelectionType, int grainSeeds) {
+//        this.width = width;
+//        this.height = height;
+//        this.cells = new Cell[width][height];
+//        this.neighbourhoodSelectionType = neighbourhoodSelectionType;
+//        this.grainSeeds = grainSeeds;
+//    }
+
+    public Board(int width, int height) {
         this.width = width;
         this.height = height;
-        this.cells = new Cell[width][height];
-        this.neighbourhoodSelectionType = neighbourhoodSelectionType;
-        this.grainSeeds = grainSeeds;
+        cells = new Cell[width][height];
+        random = new Random();
+        generateEmptyBoard();
     }
 
     public void generateEmptyBoard(){
@@ -34,6 +44,10 @@ public class Board {
         }
     }
 
+    public Color getCellColor(int x, int y) {
+            return cells[x][y].getTypeColor();
+    }
+
     public void setCellState(int i, int j, boolean alive){
         cells[i][j].setAlive(alive);
     }
@@ -48,6 +62,11 @@ public class Board {
 
     public int getCellGrainType(int x, int y) {
             return cells[x][y].getGrainType();
+    }
+
+
+    public void setCellColor(int x, int y, Color typeColor) {
+            cells[x][y].setTypeColor(typeColor);
     }
 
     public int getWidth() {
