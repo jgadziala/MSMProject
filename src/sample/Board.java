@@ -29,7 +29,9 @@ public class Board {
     public void addGrainSeeds(int grainSeeds){
         int x = random.nextInt(width);
         int y = random.nextInt(height);
-        
+        for (int i=0; i<grainSeeds;i++) {
+            cells[x][y] = new Cell(true, i);
+        }
     }
 
     public void setCellState(int i, int j, boolean alive){
