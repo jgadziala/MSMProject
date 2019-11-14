@@ -33,18 +33,21 @@
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="width" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="height" GridPane.rowIndex="1" />
-                        <TextField fx:id="widthTF" GridPane.columnIndex="1" />
-                        <TextField fx:id="heightTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                         <TextField fx:id="textField" GridPane.columnIndex="1" GridPane.rowIndex="2" visible="false" />
-                         <Button mnemonicParsing="false" onAction="#handleRand" text="RANDOM" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                        <TextField fx:id="widthTF" text="300" GridPane.columnIndex="1" />
+                        <TextField fx:id="heightTF" text="300" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                         <TextField fx:id="textField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                         <Button mnemonicParsing="false" onAction="#handleRand" text="RANDOM" GridPane.columnIndex="2" GridPane.rowIndex="2" />
 
                          <Button mnemonicParsing="false" onAction="#generate" text="Create" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" text="start" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="checkbox" mnemonicParsing="false" text="CheckBox" GridPane.rowIndex="2" />
+                        <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.columnIndex="2" />
                      </children>
                   </GridPane>
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Canvas fx:id="canvas" height="200.0" width="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Canvas fx:id="canvas" height="325.0" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
         </items>
