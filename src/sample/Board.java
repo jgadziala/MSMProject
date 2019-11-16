@@ -57,7 +57,6 @@ public class Board {
 //    }
 
 
-    // wykonanie aktualnej tury
     public boolean nextCycle() {
         int[] cellInfo;//= new int[2];
         // kopiowanie aktualnego stanu
@@ -67,8 +66,6 @@ public class Board {
                 newBoard[i][j] = cells[i][j].clone();
             }
         }
-
-        // wykonanie akcji dla danej komorki
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 cellInfo = getGrainsGrowthType(i, j);
@@ -95,7 +92,6 @@ public class Board {
     }
 
 
-    // wybranie typu rozrostu
     public int[] getGrainsGrowthType(int i, int j) {
         int [] info = new int[2];
         Map<Integer,Integer> neighbours = new HashMap<>();

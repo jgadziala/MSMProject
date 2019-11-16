@@ -23,7 +23,7 @@ public class Controller {
     int width;
     int height;
     int cellSize, cellSizeY;
-    Color backgroundColor = Color.LIGHTYELLOW;
+    Color backgroundColor = Color.WHITE;
     private volatile boolean running = true;
     private volatile boolean mcRunning = true;
     private Stage dialogStage;
@@ -63,8 +63,6 @@ public class Controller {
         generateBoard(width, height, cellSize);
         checkbox.setSelected(true);
         textField.setText(3 + "");
-
-//     board = new Board(width,height,"todo", 10);
 
         choiceBox.getItems().addAll("Moore'a", "von Neumann'a");
         choiceBox.setValue("von Neumann'a");
@@ -139,7 +137,7 @@ public class Controller {
                 while (running) {
                     Platform.runLater(() -> startFunction());
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         //e.printStackTrace();
                     }
@@ -174,9 +172,6 @@ public class Controller {
         for(int i=0;i<width;i++){
             for (int j=0;j<height;j++){
                 if(board.getCellState(i,j) && board.getCellGrainType(i,j) != -1){
-                    //System.out.println(i + " "+ j);
-                    //gc.setFill(board.getCellColor(i,j));
-                    //gc.setFill(cellColor);
                     gc.setFill(colors.get(board.getCellGrainType(i,j)-1));
                     gc.fillRect(i*cellSize,j*cellSizeY,cellSize,cellSizeY);
                 }else{
