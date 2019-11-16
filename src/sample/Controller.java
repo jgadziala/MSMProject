@@ -153,6 +153,19 @@ public class Controller {
         }
     }
 
+    @FXML
+    public void handleClear(){
+        for(int i=0; i<width; i++){
+            for(int j=0;j<height;j++){
+                board.setCellState(i,j,false);
+                board.setCellGrainType(i,j,0);
+                gc.setFill(backgroundColor);
+                gc.fillRect(i*cellSize,j*cellSizeY,cellSize,cellSizeY);
+            }
+        }
+        colors.clear();
+    }
+
     public void startFunction(){
         boolean isFinished;
         board.setPeriod(checkbox.isSelected());

@@ -40,9 +40,9 @@
                          <Button maxWidth="40.0" mnemonicParsing="false" onAction="#handleRand" text="add" GridPane.columnIndex="3" GridPane.rowIndex="2" />
 
                          <Button mnemonicParsing="false" onAction="#generate" text="create board" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" text="start" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" text="start" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                         <CheckBox fx:id="checkbox" mnemonicParsing="false" text="periodic" GridPane.rowIndex="2" />
-                        <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.columnIndex="2" />
+                        <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.columnIndex="3" />
                         <TextField fx:id="nrOfGrains" maxWidth="45.0" prefHeight="25.0" prefWidth="45.0" promptText="1" text="1" GridPane.columnIndex="3" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="45.0" />
@@ -53,6 +53,8 @@
                               <Insets left="90.0" />
                            </GridPane.margin>
                         </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="neighbourhood&#10;selection" wrappingWidth="132.97265625" GridPane.columnIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#handleClear" text="clear" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children></AnchorPane>
