@@ -40,7 +40,7 @@ public class Controller {
     @FXML
     Canvas canvas;
     @FXML
-    TextField textField;
+    TextField nrOfGrains;
 
     @FXML
     CheckBox checkbox;
@@ -62,7 +62,7 @@ public class Controller {
         height = Integer.parseInt(widthTF.getText());
         generateBoard(width, height, cellSize);
         checkbox.setSelected(true);
-        textField.setText(3 + "");
+//        nrOfGrains.setText(1 + "");
 
         choiceBox.getItems().addAll("Moore'a", "von Neumann'a");
         choiceBox.setValue("von Neumann'a");
@@ -73,10 +73,10 @@ public class Controller {
     @FXML
     public void handleRand() {
 
-        int numberOfCells = Integer.parseInt(textField.getText());
+        int numberOfCells = Integer.parseInt(nrOfGrains.getText());
         if (numberOfCells > (width * height)) {
             numberOfCells = width * height;
-            textField.setText(numberOfCells + "");
+            nrOfGrains.setText(numberOfCells + "");
         }
         randFunc(numberOfCells);
     }
@@ -144,8 +144,8 @@ public class Controller {
                 }
             });
             thread.start();
-            startButton.setText("STOP!");
-        }else if(startButton.getText().equals("STOP!")){
+            startButton.setText("stop");
+        }else if(startButton.getText().equals("stop")){
             running = false;
             thread.interrupt();
             startButton.setText("start");

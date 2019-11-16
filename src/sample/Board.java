@@ -92,6 +92,7 @@ public class Board {
     }
 
 
+    // wybranie typu rozrostu
     public int[] getGrainsGrowthType(int i, int j) {
         int [] info = new int[2];
         Map<Integer,Integer> neighbours = new HashMap<>();

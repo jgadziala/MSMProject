@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
@@ -10,9 +11,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <SplitPane dividerPositions="0.17587939698492464" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0">
+      <SplitPane dividerPositions="0.17587939698492464" orientation="VERTICAL" prefHeight="650.0" prefWidth="600.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -21,8 +22,8 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="126.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="74.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -33,21 +34,31 @@
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="width" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="height" GridPane.rowIndex="1" />
-                        <TextField fx:id="widthTF" text="300" GridPane.columnIndex="1" />
-                        <TextField fx:id="heightTF" text="300" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                         <TextField fx:id="textField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                         <Button mnemonicParsing="false" onAction="#handleRand" text="RANDOM" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="widthTF" text="500" GridPane.columnIndex="1" />
+                        <TextField fx:id="heightTF" text="500" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                         <TextField visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                         <Button maxWidth="40.0" mnemonicParsing="false" onAction="#handleRand" text="add" GridPane.columnIndex="3" GridPane.rowIndex="2" />
 
-                         <Button mnemonicParsing="false" onAction="#generate" text="Create" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                         <Button mnemonicParsing="false" onAction="#generate" text="create board" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" text="start" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <CheckBox fx:id="checkbox" mnemonicParsing="false" text="CheckBox" GridPane.rowIndex="2" />
+                        <CheckBox fx:id="checkbox" mnemonicParsing="false" text="periodic" GridPane.rowIndex="2" />
                         <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.columnIndex="2" />
+                        <TextField fx:id="nrOfGrains" maxWidth="45.0" prefHeight="25.0" prefWidth="45.0" promptText="1" text="1" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="45.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="grains" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="90.0" />
+                           </GridPane.margin>
+                        </Text>
                      </children>
                   </GridPane>
                </children></AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="524.0" prefWidth="598.0">
                <children>
-                  <Canvas fx:id="canvas" height="325.0" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0" />
+                  <Canvas fx:id="canvas" height="500.0" width="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
         </items>
