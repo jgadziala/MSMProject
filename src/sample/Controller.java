@@ -180,6 +180,14 @@ public class Controller {
 
     }
 
+    @FXML
+    public void oneStep(){
+        board.setPeriod(checkbox.isSelected());
+        board.setNeighbourhoodSelectionType((String) choiceBox.getValue());
+        board.nextCycle();
+        drawBoard();
+    }
+
 
     public void drawBoard(){
         for(int i=0;i<width;i++){
