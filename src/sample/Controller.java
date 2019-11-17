@@ -1,16 +1,22 @@
 package sample;
 
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 public class Controller {
     GraphicsContext gc;
@@ -46,7 +52,10 @@ public class Controller {
     CheckBox checkbox;
     @FXML
     ChoiceBox choiceBox;
-
+    @FXML
+    TextField xTextField;
+    @FXML
+    TextField yTextField;
     @FXML
     public void initialize() {
         rand = new Random();
@@ -61,11 +70,11 @@ public class Controller {
         width = Integer.parseInt(heightTF.getText());
         height = Integer.parseInt(widthTF.getText());
         generateBoard(width, height, cellSize);
-        checkbox.setSelected(true);
+//        checkbox.setSelected(true);
 //        nrOfGrains.setText(1 + "");
 
-        choiceBox.getItems().addAll("Moore'a", "von Neumann'a");
-        choiceBox.setValue("von Neumann'a");
+        choiceBox.getItems().addAll("Moore", "von Neumann");
+        choiceBox.setValue("von Neumann");
         startButton.setText("start");
     }
 
@@ -205,5 +214,84 @@ public class Controller {
                 }
             }
         }
+    }
+
+
+
+    public void exportToBMP(){
+        WritableImage image = canvas.snapshot(new SnapshotParameters(), null);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save canvas");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("BMP", "*.bmp")
+        );
+        File file = fileChooser.showSaveDialog(dialogStage);
+        if (file != null) {
+            try {
+                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+
+                BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(),
+                        bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+                newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, java.awt.Color.WHITE, null);
+
+                Boolean isFinish = ImageIO.write(newBufferedImage, "bmp", file);
+                System.out.println(isFinish);
+
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+
+
+    public void importFromBMP(){
+        Map<Integer,Integer> colorsMap = new HashMap<>();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load file");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("BMP", "*.bmp")
+        );
+            File file = fileChooser.showOpenDialog(dialogStage);
+            if (file != null) {
+
+                BufferedImage bufferedImage = null;
+                try {
+                    bufferedImage = ImageIO.read(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                int width = bufferedImage.getWidth()/cellSize;
+                int height = bufferedImage.getHeight()/cellSizeY;
+                xTextField.setText(String.valueOf(width));
+                yTextField.setText(String.valueOf(height));
+                generateBoard(width, height, cellSize);
+                int counter = 0;
+                for(int i =0; i <bufferedImage.getWidth();i += cellSize){
+                    for (int j = 0; j<bufferedImage.getHeight(); j += cellSize){
+                        int xi = i/cellSize;
+                        int yj = j/cellSizeY;
+                        int colorRGB = bufferedImage.getRGB(i,j);
+                        int  r   = (colorRGB & 0x00ff0000) >> 16;
+                        int  g = (colorRGB & 0x0000ff00) >> 8;
+                        int  b  =  colorRGB & 0x000000ff;
+                        Color color = Color.rgb(r,g,b);
+                        if (colorsMap.containsKey(colorRGB)) {
+                            board.setCellColor(xi, yj, color);
+                        } else if(colorRGB != -16777216){
+                            board.setCellColor(xi, yj, color);
+                            colorsMap.put(colorRGB, counter++);
+                        } else {
+                            board.setCellColor(xi, yj, color);
+                            colorsMap.put(colorRGB, -1);
+                        }
+                        board.setCellGrainType(xi,yj,colorsMap.get(colorRGB));
+                        board.setCellState(xi,yj,true);
+                        gc.setFill(color);
+                        gc.fillRect(xi * cellSize , yj * cellSizeY , cellSize, cellSizeY);
+                    }
+                }
+
+            }
+
     }
 }

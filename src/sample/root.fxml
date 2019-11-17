@@ -5,6 +5,18 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RootController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Import">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#importFromBMP" text="from BMP" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Export">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#exportToBMP" text="to BMP" />
+               </items>
+            </Menu>
+         </menus>
       </MenuBar>
    </top>
 </BorderPane>
