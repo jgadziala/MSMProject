@@ -143,10 +143,16 @@ public class Controller {
         if(startButton.getText().equals("start")) {
             running = true;
             thread = new Thread(() -> {
+                int i =0;
                 while (running) {
                     Platform.runLater(() -> startFunction());
                     try {
                         Thread.sleep(100);
+                        if((i % 10) == 0) {
+                            drawBoard();
+                        }
+                        i++;
+
                     } catch (InterruptedException e) {
                         //e.printStackTrace();
                     }

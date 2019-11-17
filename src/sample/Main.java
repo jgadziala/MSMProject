@@ -35,8 +35,8 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        rootLayout.setPrefWidth(1200);
-        rootLayout.setPrefHeight(800);
+        rootLayout.setPrefWidth(700);
+        rootLayout.setPrefHeight(700);
 
         Scene scene = new Scene(rootLayout);
         primaryStage.setScene(scene);

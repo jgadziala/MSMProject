@@ -59,7 +59,6 @@ public class Board {
 
     public boolean nextCycle() {
         int[] cellInfo;//= new int[2];
-        // kopiowanie aktualnego stanu
         Cell[][] newBoard = new Cell[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -92,7 +91,6 @@ public class Board {
     }
 
 
-    // wybranie typu rozrostu
     public int[] getGrainsGrowthType(int i, int j) {
         int [] info = new int[2];
         Map<Integer,Integer> neighbours = new HashMap<>();
@@ -107,11 +105,10 @@ public class Board {
             int[] y= {j, up, j, down};
             for (int k = 0; k < 4; k++) {
 
-                type = cells[x[k]][y[k]].getGrainType();
+                type = cells[x[k]][y[k]].getGrainId();
                 getNeighboursInfo(neighbours,type);
             }
         } else {
-            //periodycznie
             int left = i - 1;
             int up = j - 1;
             int right = i + 1;
@@ -127,7 +124,7 @@ public class Board {
                 if (y[k] == -1) tmpY = height - 1;
                 if (y[k] == height) tmpY = 0;
 
-                type = cells[tmpX][tmpY].getGrainType();
+                type = cells[tmpX][tmpY].getGrainId();
                 getNeighboursInfo(neighbours,type);
             }
         }
@@ -162,7 +159,7 @@ public class Board {
     }
 
     public void setCellGrainType(int x, int y, int grainType) {
-            cells[x][y].setGrainType(grainType);
+            cells[x][y].setGrainId(grainType);
     }
 
     public boolean getCellState(int x, int y) {
@@ -170,7 +167,7 @@ public class Board {
     }
 
     public int getCellGrainType(int x, int y) {
-            return cells[x][y].getGrainType();
+            return cells[x][y].getGrainId();
     }
 
 
