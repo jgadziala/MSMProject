@@ -28,7 +28,8 @@ public class Controller {
     Random rand;
     int width;
     int height;
-    int cellSize, cellSizeY;
+    int cellSize=1;
+    int cellSizeY=1;
     Color backgroundColor = Color.WHITE;
     private volatile boolean running = true;
     private volatile boolean mcRunning = true;
@@ -59,8 +60,6 @@ public class Controller {
     @FXML
     public void initialize() {
         rand = new Random();
-
-
     }
 
     @FXML
@@ -145,7 +144,7 @@ public class Controller {
             thread = new Thread(() -> {
                 int i =0;
                 while (running) {
-                    Platform.runLater(() -> startFunction());
+                    Platform.runLater(this::startFunction);
                     try {
                         Thread.sleep(100);
                         if((i % 10) == 0) {
@@ -263,6 +262,7 @@ public class Controller {
                 BufferedImage bufferedImage = null;
                 try {
                     bufferedImage = ImageIO.read(file);
+                    System.out.println(bufferedImage.getWidth());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

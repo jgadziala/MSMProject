@@ -56,6 +56,8 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="neighbourhood&#10;selection" wrappingWidth="132.97265625" GridPane.columnIndex="2" />
                         <Button mnemonicParsing="false" onAction="#handleClear" text="clear" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                         <Button mnemonicParsing="false" onAction="#oneStep" text="next step" GridPane.columnIndex="5" />
+                        <TextField GridPane.columnIndex="4" fx:id="xTextField" />
+                        <TextField fx:id="yTextField" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children></AnchorPane>

@@ -59,6 +59,7 @@ public class Board {
 
     public boolean nextCycle() {
         int[] cellInfo;//= new int[2];
+        // kopiowanie aktualnego stanu
         Cell[][] newBoard = new Cell[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -90,6 +91,10 @@ public class Board {
         return value;
     }
 
+//public int[] getMooreGrowthType(int i, int j){
+//        int [] info = new int[2];
+//        Map<Integer,Integer> neighbourhoods = new HashMap<>();
+//}
 
     public int[] getGrainsGrowthType(int i, int j) {
         int [] info = new int[2];
