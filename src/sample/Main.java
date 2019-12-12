@@ -27,38 +27,50 @@ public class Main extends Application {
     }
 
     public void initRootLayout() {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class
-                .getResource("root.fxml"));
         try {
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class
+                    .getResource("root.fxml"));
             rootLayout = (BorderPane) loader.load();
+            rootLayout.setPrefWidth(700);
+            rootLayout.setPrefHeight(700);
+
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+
+            // Give the controller access to the main app.
+            RootController rootController = loader.getController();
+            rootController.setMain(this);
+
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        rootLayout.setPrefWidth(700);
-        rootLayout.setPrefHeight(700);
 
-        Scene scene = new Scene(rootLayout);
-        primaryStage.setScene(scene);
 
-        RootController rootController = loader.getController();
-        rootController.setMain(this);
-
-        primaryStage.show();
     }
 
     public void showMainOverview() {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("sample.fxml"));
-        AnchorPane mainOverview = null;
         try {
-            mainOverview = loader.load();
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("sample.fxml"));
+            AnchorPane mainOverview = (AnchorPane) loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(mainOverview);
+
+
+            // Give the mainOverviewController access to the main app.
+            Controller controller = loader.getController();
+            this.controller = controller;
+            controller.setMain(this);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        rootLayout.setCenter(mainOverview);
-        this.controller = loader.getController();
     }
 
 

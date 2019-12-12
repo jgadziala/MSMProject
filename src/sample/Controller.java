@@ -7,16 +7,23 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
+
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 public class Controller {
     GraphicsContext gc;
@@ -58,8 +65,18 @@ public class Controller {
     @FXML
     TextField yTextField;
     @FXML
+    TextField inclusionsAmountTextField;
+    @FXML
+    TextField inclusionsSizeTextField;
+    @FXML
+    ChoiceBox inclusionsTypeChoiceBox;
+    @FXML
     public void initialize() {
         rand = new Random();
+        inclusionsAmountTextField.setText("3");
+        inclusionsSizeTextField.setText("10");
+        inclusionsTypeChoiceBox.getItems().addAll("square","circle");
+        inclusionsTypeChoiceBox.setValue("square");
     }
 
     @FXML
@@ -107,7 +124,6 @@ public class Controller {
 
                     board.setCellColor(x, y, Color.color(r, g, b));
                     gc.setFill(board.getCellColor(x, y));
-                    //colors[i]=board.getCellColor(x,y);
                     colors.add(board.getCellColor(x, y));
                     gc.fillRect(x * cellSize, y * cellSizeY, cellSize, cellSizeY);
                 } else i--;
@@ -146,7 +162,7 @@ public class Controller {
                 while (running) {
                     Platform.runLater(this::startFunction);
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(50);
                         if((i % 10) == 0) {
                             drawBoard();
                         }
@@ -207,6 +223,9 @@ public class Controller {
         for(int i=0;i<width;i++){
             for (int j=0;j<height;j++){
                 if(board.getCellState(i,j) && board.getCellGrainType(i,j) != -1){
+                    //System.out.println(i + " "+ j);
+                    //gc.setFill(board.getCellColor(i,j));
+                    //gc.setFill(cellColor);
                     gc.setFill(colors.get(board.getCellGrainType(i,j)-1));
                     gc.fillRect(i*cellSize,j*cellSizeY,cellSize,cellSizeY);
                 }else{
@@ -299,5 +318,94 @@ public class Controller {
 
             }
 
+    }
+
+    @FXML
+    public void addInclusions() {
+        int numberOfInclusion = Integer.parseInt(inclusionsAmountTextField.getText());
+        int sizeOfInclusion = Integer.parseInt(inclusionsSizeTextField.getText());
+
+        if (numberOfInclusion > (width * height)) {
+            numberOfInclusion = width * height;
+            nrOfGrains.setText(numberOfInclusion + "");
+        }
+        if(!board.isFinished()) {
+            randInclusion(numberOfInclusion, sizeOfInclusion, false);
+        }else{
+            randInclusion(numberOfInclusion, sizeOfInclusion, true);
+        }
+
+
+    }
+
+    public void randInclusion(int numberOfCells, int sizeOfInclusion, boolean onBorders){
+        try {
+            List<Point> grainsOnBorder = null;
+            if(onBorders){
+                grainsOnBorder = findGrainsOnBorders();
+            }
+
+            //colors = new Color[numberOfCells];
+            for (int i = 0; i < numberOfCells; i++) {
+                int x, y;
+
+                if(!onBorders) {
+                    x = rand.nextInt(width);
+                    y = rand.nextInt(height);
+                }else{
+                    int point = rand.nextInt(grainsOnBorder.size());
+                    x = grainsOnBorder.get(point).x;
+                    y = grainsOnBorder.get(point).y;
+                }
+
+                for(int k = x - sizeOfInclusion; k<x+sizeOfInclusion; k++){
+                    for(int l = y - sizeOfInclusion; l<y+sizeOfInclusion; l++){
+                        if (k>=0 && l>=0 && k<width && l<height) {
+                            if(inclusionsTypeChoiceBox.getValue().equals("square") || (inclusionsTypeChoiceBox.getValue().equals("circle") && countDistance(x,y,k,l,sizeOfInclusion))) {
+                                board.setCellState(k, l, true);
+                                board.setCellGrainType(k, l, -1);
+
+                                board.setCellColor(k, l, Color.BLACK);
+                                gc.setFill(board.getCellColor(k, l));
+
+                                //colors[i]=board.getCellColor(x,y);
+                                colors.add(board.getCellColor(k, l));
+                                gc.fillRect(k * cellSize , l * cellSizeY , cellSize, cellSizeY);
+                            }
+                        } //else i--;
+                    }
+                }
+                //Color randomColor = new Color.(r, g, b);
+
+
+            }
+
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR Dialog");
+            alert.setHeaderText("Error");
+            alert.setContentText("Not a number");
+            alert.showAndWait();
+        }
+    }
+
+    private List<Point> findGrainsOnBorders() {
+        List<Point> grainsOnBorder = new ArrayList();
+        for(int i=0;i<width;i++) {
+            for (int j = 0; j < height; j++) {
+                if(board.isCellOnBorder(i,j))
+                    grainsOnBorder.add(new Point(i,j));
+            }
+        }
+        return grainsOnBorder;
+    }
+
+    public boolean countDistance(int x, int y, int k, int l, int size){
+        boolean cond=true;
+        double distance=0;
+        distance= sqrt(pow((k-x),2) + pow((l-y),2));
+        if((distance)>(size-1))
+            cond=false;
+        return cond;
     }
 }
