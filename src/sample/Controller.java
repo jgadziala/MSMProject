@@ -71,10 +71,14 @@ public class Controller {
     @FXML
     ChoiceBox inclusionsTypeChoiceBox;
     @FXML
+    TextField rule4Probability;
+    @FXML
     public void initialize() {
         rand = new Random();
         inclusionsAmountTextField.setText("3");
         inclusionsSizeTextField.setText("10");
+        rule4Probability.setText("10");
+
         inclusionsTypeChoiceBox.getItems().addAll("square","circle");
         inclusionsTypeChoiceBox.setValue("square");
     }
@@ -90,7 +94,7 @@ public class Controller {
 //        nrOfGrains.setText(1 + "");
 
         choiceBox.getItems().addAll("Moore", "von Neumann");
-        choiceBox.setValue("von Neumann");
+        choiceBox.setValue("Moore");
         startButton.setText("start");
     }
 
@@ -200,6 +204,8 @@ public class Controller {
         boolean isFinished;
         board.setPeriod(checkbox.isSelected());
         board.setNeighbourhoodSelectionType((String) choiceBox.getValue());
+        board.setProbability(Integer.parseInt(rule4Probability.getText()));
+
         isFinished = board.nextCycle();
         if(isFinished) {
             drawBoard();
