@@ -68,8 +68,8 @@ public class Controller {
     TextField inclusionsAmountTextField;
     @FXML
     TextField inclusionsSizeTextField;
-    @FXML
-    ChoiceBox inclusionsTypeChoiceBox;
+//    @FXML
+//    ChoiceBox inclusionsTypeChoiceBox;
     @FXML
     TextField rule4Probability;
     @FXML
@@ -79,8 +79,8 @@ public class Controller {
         inclusionsSizeTextField.setText("10");
         rule4Probability.setText("10");
 
-        inclusionsTypeChoiceBox.getItems().addAll("square","circle");
-        inclusionsTypeChoiceBox.setValue("square");
+//        inclusionsTypeChoiceBox.getItems().addAll("square","circle");
+//        inclusionsTypeChoiceBox.setValue("square");
     }
 
     @FXML
@@ -367,7 +367,7 @@ public class Controller {
                 for(int k = x - sizeOfInclusion; k<x+sizeOfInclusion; k++){
                     for(int l = y - sizeOfInclusion; l<y+sizeOfInclusion; l++){
                         if (k>=0 && l>=0 && k<width && l<height) {
-                            if(inclusionsTypeChoiceBox.getValue().equals("square") || (inclusionsTypeChoiceBox.getValue().equals("circle") && countDistance(x,y,k,l,sizeOfInclusion))) {
+                            if(countDistance(x,y,k,l,sizeOfInclusion)) {
                                 board.setCellState(k, l, true);
                                 board.setCellGrainType(k, l, -1);
 
