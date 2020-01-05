@@ -24,7 +24,7 @@ public class Board {
     }
     private int height;
     private Cell[][] cells;
-    private String neighbourhoodSelectionType;
+//    private String neighbourhoodSelectionType;
     private int grainSeeds;
 
 //    public Board(int width, int height, String neighbourhoodSelectionType, int grainSeeds) {
@@ -330,14 +330,14 @@ public class Board {
     public void setCells(Cell[][] cells) {
         this.cells = cells;
     }
-
-    public String getNeighbourhoodSelectionType() {
-        return neighbourhoodSelectionType;
-    }
-
-    public void setNeighbourhoodSelectionType(String neighbourhoodSelectionType) {
-        this.neighbourhoodSelectionType = neighbourhoodSelectionType;
-    }
+//
+//    public String getNeighbourhoodType() {
+//        return neighbourhoodSelectionType;
+//    }
+//
+//    public void setNeighbourhoodSelectionType(String neighbourhoodSelectionType) {
+//        this.neighbourhoodSelectionType = neighbourhoodSelectionType;
+//    }
 
     public int getGrainSeeds() {
         return grainSeeds;

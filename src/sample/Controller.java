@@ -203,7 +203,7 @@ public class Controller {
     public void startFunction(){
         boolean isFinished;
         board.setPeriod(checkbox.isSelected());
-        board.setNeighbourhoodSelectionType((String) choiceBox.getValue());
+        board.setNeighbourhoodType((String) choiceBox.getValue());
         board.setProbability(Integer.parseInt(rule4Probability.getText()));
 
         isFinished = board.nextCycle();
@@ -219,7 +219,7 @@ public class Controller {
     @FXML
     public void oneStep(){
         board.setPeriod(checkbox.isSelected());
-        board.setNeighbourhoodSelectionType((String) choiceBox.getValue());
+        board.setNeighbourhoodType((String) choiceBox.getValue());
         board.nextCycle();
         drawBoard();
     }
