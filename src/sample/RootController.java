@@ -12,10 +12,21 @@ public class RootController {
     @FXML
     public void exportToBMP(){
         main.getController().exportToBMP();
+        main.getController().exportToTXT();
+    }
+
+    @FXML
+    public void exportToTXT(){
+        main.getController().exportToTXT();
     }
 
     @FXML
     public void importFromBMP(){
         main.getController().importFromBMP();
+    }
+
+    @FXML
+    public void importFromTXT(){
+        main.getController().importFromTXT();
     }
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
+
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RootController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
@@ -9,11 +12,13 @@
             <Menu mnemonicParsing="false" text="Import">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#importFromBMP" text="from BMP" />
+                  <MenuItem mnemonicParsing="false" onAction="#importFromTXT" text="from TXT" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Export">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#exportToBMP" text="to BMP" />
+                  <MenuItem mnemonicParsing="false" onAction="#exportToTXT" text="to TXT" />
                </items>
             </Menu>
          </menus>
