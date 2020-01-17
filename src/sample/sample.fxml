@@ -76,6 +76,12 @@
                         <Button mnemonicParsing="false" onAction="#drawBoundaries" text="draw boundaries" GridPane.columnIndex="5" GridPane.rowIndex="5" />
                         <TextField fx:id="boundaryWidth" GridPane.columnIndex="5" GridPane.rowIndex="4" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="bound. width" textAlignment="JUSTIFY" wrappingWidth="70.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#calculateAvgGrainArea" text="calc avg grain area" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <Text fx:id="avgText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </children></AnchorPane>
