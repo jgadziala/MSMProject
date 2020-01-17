@@ -10,7 +10,7 @@ public class Board {
     private boolean period;
     private int probability;
     private String neighbourhoodType;
-    private List<Integer> selectedGrains;
+    private Map<Integer, Integer> selectedGrains; //key: 0 - substructure, 1 - dual phase
 
     public boolean isPeriod() {
         return period;
@@ -38,7 +38,7 @@ public class Board {
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
-        selectedGrains = new ArrayList<>();
+        selectedGrains = new HashMap<>();
 
         cells = new Cell[width][height];
         random = new Random();
@@ -158,7 +158,7 @@ public class Board {
         if (neighbours.containsKey(type)) {
             int count = neighbours.get(type);
             neighbours.put(type, count + 1);
-        } else if (type != 0 && type != -1 && !selectedGrains.contains(type)) {
+        } else if (type != 0 && type != -1 && selectedGrains.get(type) == null) {
             neighbours.put(type, 1);
         }
     }
@@ -278,7 +278,7 @@ public class Board {
         if (neighbours.containsKey(type)) {
             int count = neighbours.get(type);
             neighbours.put(type, count + 1);
-        } else if (type != 0 && type != -1 && !selectedGrains.contains(type)) {
+        } else if (type != 0 && type != -1 && selectedGrains.get(type) == null) {
             neighbours.put(type, 1);
         }
     }
@@ -351,11 +351,11 @@ public class Board {
     public void setNeighbourhoodType(String neighbourhoodType) {
         this.neighbourhoodType = neighbourhoodType;
     }
-    public List<Integer> getSelectedGrains() {
+    public Map<Integer, Integer> getSelectedGrains() {
         return selectedGrains;
     }
 
-    public void setSelectedGrains(List<Integer> selectedGrains) {
+    public void setSelectedGrains(Map<Integer, Integer> selectedGrains) {
         this.selectedGrains = selectedGrains;
     }
 }

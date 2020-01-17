@@ -44,7 +44,10 @@ public class Controller {
     private volatile boolean mcRunning = true;
     private Stage dialogStage;
     private Main main;
-
+    @FXML
+    TextField boundaryWidth;
+    @FXML
+    CheckBox onlySelectedGrains;
     @FXML
     ChoiceBox caAlgorithmType;
     @FXML
@@ -84,6 +87,7 @@ public class Controller {
         rule4Probability.setText("10");
         caAlgorithmType.getItems().addAll("Substructure", "Dual phase");
         caAlgorithmType.setValue("Substructure");
+        boundaryWidth.setText("1");
 
 //        inclusionsTypeChoiceBox.getItems().addAll("square","circle");
 //        inclusionsTypeChoiceBox.setValue("square");
@@ -172,22 +176,50 @@ public class Controller {
                 System.out.println("Cell nr: " + cell_x + ", " + cell_y);
                 if (board.getCellState(cell_x, cell_y)) {
 
-                    Color color = board.getCellColor(cell_x, cell_y);
+                    //Color color = board.getCellColor(cell_x, cell_y);
+
                     int type = board.getCellGrainType(cell_x,cell_y);
-                    board.getSelectedGrains().add(type);
-                    for(int i=0;i<width;i++) {
-                        for (int j = 0; j < height; j++) {
-                            if(board.getCellGrainType(i, j) == type){
-                                //board.setCellGrainType(i,j, Integer.MAX_VALUE);
-                                //board.setCellColor(i,j,Color.DARKMAGENTA);
-                                gc.setFill(Color.DARKMAGENTA);
-                                gc.fillRect(i * cellSize , j * cellSize , cellSize , cellSize );
+                    //Color color = colors.get(type);
+                    if(board.getSelectedGrains().get(type) == null) {
+                        Color selectingCOlor = Color.DARKMAGENTA;
+//                        if(!onlySelectedGrains.isSelected()) {
+                            if (caAlgorithmType.getValue().toString() == "Substructure") {
+                                board.getSelectedGrains().put(type, 0);
+                                selectingCOlor = Color.MAGENTA;
+                            } else {
+                                board.getSelectedGrains().put(type, 1);
+                            }
+//                        }else{
+//                            selectingCOlor = Color.GOLD;
+//                            board.getSelectedGrains().put(type, 2);
+//                        }
+
+                        for (int i = 0; i < width; i++) {
+                            for (int j = 0; j < height; j++) {
+                                if (board.getCellGrainType(i, j) == type) {
+                                    //board.setCellGrainType(i,j, Integer.MAX_VALUE);
+                                    //board.setCellColor(i,j,Color.DARKMAGENTA);
+                                    gc.setFill(selectingCOlor);
+                                    gc.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+                                }
+                            }
+                        }
+                    }else{
+                        board.getSelectedGrains().remove(Integer.valueOf(type));
+                        for (int i = 0; i < width; i++) {
+                            for (int j = 0; j < height; j++) {
+                                if (board.getCellGrainType(i, j) == type && type != Integer.MAX_VALUE) {
+                                    //board.setCellGrainType(i,j, Integer.MAX_VALUE);
+                                    //board.setCellColor(i,j,Color.DARKMAGENTA);
+                                    gc.setFill(colors.get(type-1));
+                                    gc.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+                                }
                             }
                         }
                     }
                     //colors.add(board.getCellColor(cell_x, cell_y));
                     gc.setFill(board.getCellColor(cell_x, cell_y));
-                    gc.fillRect(x  - (x % cellSize), y  - (y % cellSize), cellSize, cellSize);
+                    gc.fillRect(cell_x * cellSize, cell_y * cellSize, cellSize, cellSize);
                 } else {
                     //board.setCellValue(cell_x, cell_y, false);
                     //gc.setFill(backgroundColor);
@@ -195,8 +227,6 @@ public class Controller {
 
 
                 }
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -205,6 +235,7 @@ public class Controller {
 
     @FXML
     public void handleStart() {
+
         if (startButton.getText().equals("start")) {
             running = true;
             thread = new Thread(() -> {
@@ -225,12 +256,14 @@ public class Controller {
             });
             thread.start();
             startButton.setText("stop");
+            drawBoard();
         } else if (startButton.getText().equals("stop")) {
             running = false;
             thread.interrupt();
             startButton.setText("start");
             drawBoard();
         }
+
     }
 
     @FXML
@@ -276,13 +309,13 @@ public class Controller {
     public void drawBoard() {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if(board.getCellState(i,j) && board.getCellGrainType(i,j) != -1 ){
-                    int type = board.getCellGrainType(i,j);
-                    if(type != Integer.MAX_VALUE)
-                        gc.setFill(colors.get(type-1));
+                if (board.getCellState(i, j) && board.getCellGrainType(i, j) != -1) {
+                    int type = board.getCellGrainType(i, j);
+                    if (type != Integer.MAX_VALUE)
+                        gc.setFill(colors.get(type - 1));
                     else
                         gc.setFill(Color.DARKMAGENTA);
-                    gc.fillRect(i*cellSize,j*cellSizeY,cellSize,cellSizeY);
+                    gc.fillRect(i * cellSize, j * cellSizeY, cellSize, cellSizeY);
                 } else {
                     if (board.getCellGrainType(i, j) == -1)
                         gc.setFill(Color.BLACK);
@@ -582,37 +615,102 @@ public class Controller {
             }
         });
     }
+
     @FXML
     public void clearUnselectedGrains(){
         for(int i=0;i<width;i++) {
             for (int j = 0; j < height; j++) {
                 int type = board.getCellGrainType(i,j);
-                if(board.getCellState(i,j) && !board.getSelectedGrains().contains(type)){
+                if(board.getCellState(i,j) && board.getSelectedGrains().get(type) == null){
                     board.setCellGrainType(i, j, 0);
                     board.setCellState(i, j, false);
                     //gc.setFill(Color.BEIGE);
                     //gc.fillRect(i * cellSize , j * cellSize , cellSize , cellSize );
-                }else if(board.getCellState(i,j) && board.getSelectedGrains().contains(type)){
+                }else if(board.getCellState(i,j) && board.getSelectedGrains().get(type) == 0){
                     //gc.setFill(board.getCellColor(i,j));
                     //c.fillRect(i * cellSize , j * cellSize , cellSize , cellSize );
+                } else if(board.getCellState(i,j) && board.getSelectedGrains().get(type) == 1){
+
                 }
             }
         }
-        if(caAlgorithmType.getValue().equals("Substructure")){
-            drawBoard();
-        }else{
-            for(int i=0;i<width;i++) {
-                for (int j = 0; j < height; j++) {
-                    if(board.getSelectedGrains().contains(board.getCellGrainType(i,j))){
-                        board.setCellGrainType(i,j, Integer.MAX_VALUE);
-                        board.setCellColor(i,j,Color.DARKMAGENTA);
+        for(int i=0;i<width;i++) {
+            for (int j = 0; j < height; j++) {
+                if (board.getSelectedGrains().get(board.getCellGrainType(i, j)) != null){
+                    if (board.getSelectedGrains().get(board.getCellGrainType(i, j)) == 1) {
+                        board.setCellGrainType(i, j, Integer.MAX_VALUE);
+                        board.setCellColor(i, j, Color.DARKMAGENTA);
                     }
                 }
             }
-            board.getSelectedGrains().clear();
-            board.getSelectedGrains().add(Integer.MAX_VALUE);
-            drawBoard();
         }
+        //board.getSelectedGrains().clear();
+        board.getSelectedGrains().put(Integer.MAX_VALUE, 1);
+        drawBoard();
+
 
     }
+
+
+    @FXML
+    public void drawBoundaries(){
+            int type;
+            Map<Integer, Integer> neighbours = new HashMap<>();
+            int bw = Integer.parseInt(boundaryWidth.getText());
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    if (board.isCellOnBorder(i, j)) {
+                        int counter = 1;
+                        int ijType = board.getCellGrainType(i, j);
+                        boolean alone = true;
+                        while (counter <= bw) {
+                            int left = i - 1 * counter;
+                            int up = j - 1 * counter;
+                            int right = i + 1 * counter;
+                            int down = j + 1 * counter;
+                            int[] x = {left, i, right, i};
+                            int[] y = {j, up, j, down};
+                            int tmpX, tmpY;
+
+
+                            for (int k = 0; k < 4; k++) {
+                                tmpX = x[k];
+                                tmpY = y[k];
+                                if (x[k] < 0) tmpX = width - 1 * counter;
+                                if (x[k] >= width) tmpX = 0 + counter - 1;
+                                if (y[k] < 0) tmpY = height - 1 * counter;
+                                if (y[k] >= height) tmpY = 0 + counter - 1;
+
+                                type = board.getCellGrainType(tmpX, tmpY);
+                                if (type == ijType && !(tmpX == i && tmpY == j) && counter == 1)
+                                    alone = false;
+                                if (neighbours.containsKey(type)) {
+                                    int count = neighbours.get(type);
+                                    neighbours.put(type, count + 1);
+                                } else if (type != 0 && type != -1) {
+                                    neighbours.put(type, 1);
+                                }
+                            }
+                            counter++;
+                        }
+//                        if (onlySelectedGrains.isSelected()){
+//                            if(board.getSelectedGrains().get(ijType) == null) {
+//                                neighbours.clear();
+//                            }else if(board.getSelectedGrains().get(ijType) != 2){
+//                                neighbours.clear();
+//                            }
+//                        }
+
+                        if (neighbours.size() > 1 || alone) {
+                            board.setCellGrainType(i, j, -1);
+                            gc.setFill(Color.BLACK);
+                            gc.fillRect(i * cellSize, j * cellSizeY, cellSize, cellSizeY);
+                        }
+                        neighbours.clear();
+                    }
+                }
+            }
+
+    }
+
 }

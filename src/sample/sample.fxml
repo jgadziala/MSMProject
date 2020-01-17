@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <SplitPane dividerPositions="0.22685185185185186" orientation="VERTICAL" prefHeight="650.0" prefWidth="600.0">
+      <SplitPane dividerPositions="0.2824074074074074" orientation="VERTICAL" prefHeight="650.0" prefWidth="600.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -32,6 +32,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="width" />
@@ -42,7 +43,7 @@
                          <Button maxWidth="40.0" mnemonicParsing="false" onAction="#handleRand" text="add" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
                          <Button mnemonicParsing="false" onAction="#generate" text="create board" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" text="start" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" text="start" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                         <CheckBox fx:id="checkbox" mnemonicParsing="false" text="periodic" GridPane.rowIndex="2" />
                         <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.columnIndex="3" />
                         <TextField fx:id="nrOfGrains" maxWidth="45.0" prefHeight="25.0" prefWidth="45.0" promptText="1" text="1" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -56,8 +57,8 @@
                            </GridPane.margin>
                         </Text>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="neighbourhood&#10;selection" wrappingWidth="132.97265625" GridPane.columnIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#handleClear" text="clear" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#oneStep" text="next step" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#handleClear" text="clear" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#oneStep" text="next step" GridPane.rowIndex="5" />
                         <TextField visible="false" GridPane.columnIndex="4" fx:id="xTextField" />
                         <TextField fx:id="yTextField" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                         <TextField fx:id="inclusionsAmountTextField" GridPane.columnIndex="5" />
@@ -67,8 +68,14 @@
                         <Button mnemonicParsing="false" onAction="#addInclusions" text="Add inclusions" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                         <TextField fx:id="rule4Probability" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="rule 4 probability" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#clearUnselectedGrains" prefHeight="46.0" prefWidth="112.0" text="clear unselected grains" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <ChoiceBox fx:id="caAlgorithmType" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#clearUnselectedGrains" prefHeight="46.0" prefWidth="112.0" text="clear unselected grains" textAlignment="JUSTIFY" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="9.0" />
+                           </font></Button>
+                        <ChoiceBox fx:id="caAlgorithmType" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onAction="#drawBoundaries" text="draw boundaries" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                        <TextField fx:id="boundaryWidth" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="bound. width" textAlignment="JUSTIFY" wrappingWidth="70.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </children></AnchorPane>
