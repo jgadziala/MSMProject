@@ -2,9 +2,7 @@ package sample;
 
 import javafx.scene.paint.Color;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Board {
     Random random = new Random();
@@ -12,6 +10,8 @@ public class Board {
     private boolean period;
     private int probability;
     private String neighbourhoodType;
+    private List<Integer> selectedGrains;
+
     public boolean isPeriod() {
         return period;
     }
@@ -38,6 +38,8 @@ public class Board {
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
+        selectedGrains = new ArrayList<>();
+
         cells = new Cell[width][height];
         random = new Random();
         generateEmptyBoard();
@@ -60,7 +62,6 @@ public class Board {
 //    }
 
 
-    // wykonanie aktualnej tury
     public boolean nextCycle() {
         int[] cellInfo = null;
         Cell[][] newBoard = new Cell[width][height];
@@ -157,7 +158,7 @@ public class Board {
         if (neighbours.containsKey(type)) {
             int count = neighbours.get(type);
             neighbours.put(type, count + 1);
-        } else if (type != 0 && type != -1) {
+        } else if (type != 0 && type != -1 && !selectedGrains.contains(type)) {
             neighbours.put(type, 1);
         }
     }
@@ -277,7 +278,7 @@ public class Board {
         if (neighbours.containsKey(type)) {
             int count = neighbours.get(type);
             neighbours.put(type, count + 1);
-        } else if (type != 0 && type != -1) {
+        } else if (type != 0 && type != -1 && !selectedGrains.contains(type)) {
             neighbours.put(type, 1);
         }
     }
@@ -350,7 +351,13 @@ public class Board {
     public void setNeighbourhoodType(String neighbourhoodType) {
         this.neighbourhoodType = neighbourhoodType;
     }
+    public List<Integer> getSelectedGrains() {
+        return selectedGrains;
+    }
 
+    public void setSelectedGrains(List<Integer> selectedGrains) {
+        this.selectedGrains = selectedGrains;
+    }
 }
 
 
